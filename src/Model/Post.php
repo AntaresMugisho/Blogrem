@@ -16,7 +16,7 @@ class Post{
     public function set_name(string $name):self
     {
         $this->name = htmlentities($name);
-        return $this;e
+        return $this;
     }
 
     public function set_slug(string $slug): self
