@@ -33,12 +33,18 @@ class Post{
 
     public function set_created_at(string $created_at) : void
     {
-        $this->created_at = ($created_at);
+        $this->created_at = $created_at;
     }
 
     public function get_id() : ?int
     {
         return ($this->id);
+    }
+
+    public function set_id(int $id) : int
+    {
+        $this->id = $id;
+        return $this->id;
     }
 
     public function get_name() : ?string

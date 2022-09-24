@@ -1,9 +1,12 @@
 <?php
 
+// Metadata
+$title = "Paneau d'administration";
+// ----------------------------------------- //
+
 use App\Table\PostTable;
 
-    $title = "Paneau d'administration";
-    [$posts, $paginated_query] = (new PostTable())->find_paginated_articles();
+[$posts, $paginated_query] = (new PostTable())->find_paginated_articles();
 
 ?>
 
@@ -16,15 +19,14 @@ use App\Table\PostTable;
 
         <?php if (isset($_GET["deleted"])) : ?>
             <div class="alert alert-success">L'article a bien été supprimé ! </div>
-        <!--
-            <div class="alert alert-danger">Echec de la suppression de l'article ! </div> -->
         <?php endif ?>
 
         <table class="table">
             <thead>
                 <th>ID</th>
                 <th>Titre</th>
-                <th>Actions</th>
+                
+                <th> <a href="<?= $router->url("new_article") ?>" class="btn btn-dark">Nouvel article</a> </th>
 
             </thead>
             <tbody>
