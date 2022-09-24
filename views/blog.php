@@ -1,8 +1,8 @@
 <?php 
-
+// Metadata
 $title = "Articles";
 $description = "";
-
+// ----------------------------------------- //
 use App\Table\PostTable;
 
 $post_table = new PostTable();

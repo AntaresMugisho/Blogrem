@@ -1,10 +1,12 @@
 <?php
 
-use App\Table\CategoryTable;
-use App\Table\PostTable;
-
+// Metadata
 $title = "Catégories";
 $description = "";
+// ----------------------------------------- //
+
+use App\Table\CategoryTable;
+use App\Table\PostTable;
 
 // Get current category params
 $id = (int)$params["id"];

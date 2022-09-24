@@ -17,10 +17,11 @@ $router
     ->get("/category/[*:slug]-[i:id]", "category", "category")  
     ->get("/blog/[*:slug]-[i:id]", "article", "article")
     ->get("/blog", "blog", "blog")
+
     ->match("/admin/post/edit/[i:id]", "admin/posts/edit", "edition")
+    ->match("/admin/post/new", "admin/posts/new", "new_article")
     ->post("/admin/post/delete/[i:id]", "admin/posts/delete", "deletion")
-    ->get("/admin/post/new/[i:id]", "admin/posts/new", "new")
     ->get("/admin", "admin/posts/index", "admin")
-    ->run();
+    ->run();    
     
 ?>
