@@ -5,6 +5,10 @@ namespace App\Model;
 class User{
 
     /**
+     * @var int
+     */
+    private $id;
+    /**
      * @var string
      */
     private $username;
@@ -14,6 +18,17 @@ class User{
     private $password;
 
 
+    public function get_id() : ?int
+    {
+        return $this->id;
+    }
+
+    public function set_id(string $id):self
+    {
+        $this->id = $id;
+        return $this;
+    }
+    
     public function get_username() : ?string
     {
         return $this->username;

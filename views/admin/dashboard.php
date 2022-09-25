@@ -1,5 +1,9 @@
 <?php
 
+use App\Auth;
+
+Auth::check();
+
 // Metadata
 $title = "Tableau de bord";
 $description= "";

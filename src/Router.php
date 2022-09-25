@@ -40,7 +40,7 @@ class Router {
     public function run():self
     {
         $match = $this->router->match();
-        $view = $match["target"];
+        $view = $match["target"] ?: "e404";
 
         $params = $match["params"];
         $router = $this;
