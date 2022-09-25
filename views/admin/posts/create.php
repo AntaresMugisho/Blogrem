@@ -6,9 +6,10 @@ $title = "Administration - Création d'article";
 
 use App\Model\Post;
 use App\Table\PostTable;
-use App\Validator;
 use App\HTML\Form;
 use App\Helpers\ObjectHelper;
+
+use App\Validators\PostValidator;
 
 $table = new PostTable();
 $post = new Post();
@@ -17,23 +18,24 @@ $errors = [];
 
 if (!empty($_POST)){
 
-    $v = new Validator($_POST);
-    $v->labels(array(
-        'name' => "Le titre",
-        'slug' => "L'URL",
-        'content' => "Le contenu"
-    ));
+    $v = new PostValidator($_POST, $table, $post->get_id());
 
-    $v->rule("required", ["name", "slug", "content"]);
-    $v->rule("lengthBetween", ["name", "slug"], 3, 150);
-    //$v->rule("lengthMoreThan", "content", 255);
-    
-    ObjectHelper::hydrate($post, $_POST, ["name", "slug", "content", "created_at"]);
+    $fields = ["name", "slug", "content", "created_at"];
+    ObjectHelper::hydrate($post, $_POST, $fields);
    
     if($v->validate()) {
-        $table->create($post);
+        $data = [];
+        
+        foreach ($fields as $field) {
+            $getter = "get_" . $field;
+            $data[$field] = $post->$getter();
+        }
+
+        $table->create($data);
         header("Location: " . $router->url("posts") . "?created=1");
-    }else {
+        http_response_code(301);
+    }
+    else {
         // Errors
         $errors = $v->errors();
     }

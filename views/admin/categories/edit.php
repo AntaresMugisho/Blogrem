@@ -4,29 +4,40 @@
 $title = "Administration - Edition d'article";
 // ----------------------------------------- //
 
-use App\Table\PostTable;
 use App\HTML\Form;
 use App\Helpers\ObjectHelper;
-use App\Validators\PostValidator;
+use App\Table\CategoryTable;
+use App\Validators\CategoryValidator;
+
 
 $id = (int)$params["id"];
 
-$table = new PostTable();
-$post = $table->find($id);
+$table = new CategoryTable();
+$category = $table->find($id);
 
 $updated =  false;
 $errors = [];
 
 if (!empty($_POST)){
 
-    $v = new PostValidator($_POST, $table, $post->get_id());
+    $v = new CategoryValidator($_POST, $table, $category->get_id());
     
-    ObjectHelper::hydrate($post, $_POST, ["name", "slug", "content", "created_at"]);
-    
+    $fields = ["name", "slug"];
+    ObjectHelper::hydrate($category, $_POST, $fields);
+
     if($v->validate()) {
-        $table->update($post);
+
+        $data = [];
+        
+        foreach ($fields as $field) {
+            $getter = "get_" . $field;
+            $data[$field] = $category->$getter();
+        }
+
+        $table->update($data, $category->get_id());
         $updated = true;
-    } else {
+    } 
+    else {
         // Errors
         $errors = $v->errors();
     }
@@ -38,18 +49,18 @@ if (!empty($_POST)){
     | Generating HTML code                                       |
     +------------------------------------------------------------+ -->
 
-        <h1>Editer un article</h1>
+        <h1>Editer la catégorie</h1>
         <hr class="border border-dark border-1">
 
         <?php if ($updated): ?>
-            <div class="alert alert-success">L'article a été modifié.</div>
+            <div class="alert alert-success">La catégorie a bien été modifiée.</div>
 
         <?php elseif (!empty($errors)): ?>
-            <div class="alert alert-danger">L'article n'a pas pu être modifié !</div>
+            <div class="alert alert-danger">La catégorie n'a pas pu être modifiée !</div>
 
         <?php endif ?>
 
         <?php 
-           $form = new Form($post, $errors);
+           $form = new Form($category, $errors);
            require "_form.php" 
         ?>

@@ -12,6 +12,7 @@ final class CategoryTable extends Table {
     protected $table = "category";
     protected $class = Category::class;
     
+    
     /** @param App\Model\Post[] $posts */
     public function find_related_categories(array $posts):  void     
     {

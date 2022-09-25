@@ -1,9 +1,9 @@
 <?php
 
-use App\Table\PostTable;
+use App\Table\CategoryTable;
 
-$table = new PostTable();
+$table = new CategoryTable();
 $table->delete($params["id"]);
 
-header("Location:" . $router->url("posts") . "?deleted=1");
+header("Location:" . $router->url("categories") . "?deleted=1");
 http_response_code(301);

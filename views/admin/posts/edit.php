@@ -21,10 +21,19 @@ if (!empty($_POST)){
 
     $v = new PostValidator($_POST, $table, $post->get_id());
     
-    ObjectHelper::hydrate($post, $_POST, ["name", "slug", "content", "created_at"]);
+    $fields = ["name", "slug", "content", "created_at"];
+    ObjectHelper::hydrate($category, $_POST, $fields);
     
     if($v->validate()) {
-        $table->update($post);
+
+        $data = [];
+        
+        foreach ($fields as $field) {
+            $getter = "get_" . $field;
+            $data[$field] = $post->$getter();
+        }
+
+        $table->update($data, $post->get_id());
         $updated = true;
     } else {
         // Errors

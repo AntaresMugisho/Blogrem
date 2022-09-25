@@ -4,36 +4,37 @@
 $title = "Administration - Création d'article";
 // ----------------------------------------- //
 
-use App\Model\Post;
-use App\Table\PostTable;
-use App\Validator;
 use App\HTML\Form;
 use App\Helpers\ObjectHelper;
+use App\Model\Category;
+use App\Table\CategoryTable;
+use App\Validators\CategoryValidator;
 
-$table = new PostTable();
-$post = new Post();
+$table = new CategoryTable();
+$category = new Category();
 
 $errors = [];
 
 if (!empty($_POST)){
 
-    $v = new Validator($_POST);
-    $v->labels(array(
-        'name' => "Le titre",
-        'slug' => "L'URL",
-        'content' => "Le contenu"
-    ));
-
-    $v->rule("required", ["name", "slug", "content"]);
-    $v->rule("lengthBetween", ["name", "slug"], 3, 150);
-    //$v->rule("lengthMoreThan", "content", 255);
+    $v = new CategoryValidator($_POST, $table);
     
-    ObjectHelper::hydrate($post, $_POST, ["name", "slug", "content", "created_at"]);
+    $fields = ["name", "slug"];
+    ObjectHelper::hydrate($category, $_POST, $fields);
    
     if($v->validate()) {
-        $table->create($post);
-        header("Location: " . $router->url("posts") . "?created=1");
-    }else {
+        $data = [];
+        
+        foreach ($fields as $field) {
+            $getter = "get_" . $field;
+            $data[$field] = $category->$getter();
+        }
+
+        $table->create($data);
+        header("Location: " . $router->url("categories") . "?created=1");
+        http_response_code(301);
+    }
+    else {
         // Errors
         $errors = $v->errors();
     }
@@ -45,11 +46,11 @@ if (!empty($_POST)){
     | Generating HTML code                                       |
     +------------------------------------------------------------+ -->
 
-        <h1>Créer un nouvel article</h1>
+        <h1>Créer une nouvelle catégorie</h1>
         <hr class="border border-dark border-1">
 
         <?php if (!empty($errors)): ?>
-            <div class="alert alert-danger">L'article n'a pas pu être créé !</div>
+            <div class="alert alert-danger">La catégorie n'a pas pu être créé !</div>
         <?php endif ?>
 
        <?php 

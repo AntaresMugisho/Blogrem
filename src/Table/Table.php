@@ -57,5 +57,53 @@ abstract class Table{
    
         return (int)$query->fetch(PDO::FETCH_NUM)[0] > 0;
     }   
+
+    public function all():array
+    {
+        $sql = "SELECT * FROM {$this->table}";
+        return $this->pdo->query($sql, PDO::FETCH_CLASS, $this->class)->fetchAll();
+    }
+
+    public function create(array $data): int  
+    {   
+        $sql_fields = [];
+        foreach ($data as $k => $value){
+            $sql_fields[] = "$k = :$k";
+            dump($sql_fields); 
+        }
+        $query = $this->pdo->prepare("INSERT INTO {$this->table} SET " . implode(', ', $sql_fields));
+        $success = $query->execute($data);
+            
+        if ($success === false){
+            throw new Exception("Impossible de créer l'enregistrement dans la table");
+        }
+        
+        return (int)$this->pdo->lastInsertId();
+    }
+
+    public function update(array $data,int $id): void   
+    {
+        $sql_fields = [];
+        foreach ($data as $k => $value){
+            $sql_fields[] = "$k = :$k";
+            dump($sql_fields); 
+        }
+        $query = $this->pdo->prepare("UPDATE {$this->table} SET " . implode(', ', $sql_fields) . "WHERE id = :id");
+        $success = $query->execute(array_merge($data, ["id" => $id]));
+            
+        if ($success === false){
+            throw new Exception("Impossible de modifier l'enregistrement dans la table");
+        }
+    }
+
+    public function delete(int $id): void
+    {
+        $query = $this->pdo->prepare("DELETE FROM {$this->table} WHERE id = ?");
+        $success = $query->execute([$id]);
+        
+        if ($success === false){
+            throw new Exception("Echec de suppression de l'article {$id}");
+        }
+    }
 }
 ?>

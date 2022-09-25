@@ -29,6 +29,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="<?= $router->url("posts") ?>">Gestion d'articles</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?= $router->url("categories") ?>">Gestion de catégories</a>
+                    </li>
                 </ul>
                 </div>
             </div>
