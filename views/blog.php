@@ -8,9 +8,6 @@ use App\Table\PostTable;
 $post_table = new PostTable();
 [$posts, $paginated_query] = $post_table->find_paginated_articles();
 
-
-$link = $router->url("blog");
-
 ?>
 
 <!--+------------------------------------------------------------+
@@ -41,5 +38,8 @@ $link = $router->url("blog");
             <?php endforeach; ?>
         </div>
 
-<?= $paginated_query->previous_link($link); ?>
-<?= $paginated_query->next_link($link); ?>
+<?php
+    $link = $router->url("blog");
+    echo $paginated_query->previous_link($link);
+    echo $paginated_query->next_link($link); 
+?>

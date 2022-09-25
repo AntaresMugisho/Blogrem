@@ -5,9 +5,9 @@ $title = "Administration - Edition d'article";
 // ----------------------------------------- //
 
 use App\Table\PostTable;
-use App\Validator;
 use App\HTML\Form;
 use App\Helpers\ObjectHelper;
+use App\Validators\PostValidator;
 
 $id = (int)$params["id"];
 
@@ -19,18 +19,10 @@ $errors = [];
 
 if (!empty($_POST)){
 
-    $v = new Validator($_POST);
-    $v->labels(array(
-        'name' => "Le titre",
-        'slug' => "L'URL",
-        'content' => "Le contenu"
-    ));
-
-    $v->rule("required", ["name", "slug"]);
-    $v->rule("lengthBetween", ["name", "slug"], 3, 150);
+    $v = new PostValidator($_POST, $table, $post->get_id());
     
     ObjectHelper::hydrate($post, $_POST, ["name", "slug", "content", "created_at"]);
-   
+    
     if($v->validate()) {
         $table->update($post);
         $updated = true;
@@ -48,10 +40,6 @@ if (!empty($_POST)){
 
         <h1>Editer un article</h1>
         <hr class="border border-dark border-1">
-
-        <?php if (isset($_GET["created"])) : ?>
-            <div class="alert alert-success">L'article a bien été créé ! </div>
-        <?php endif ?>
 
         <?php if ($updated): ?>
             <div class="alert alert-success">L'article a été modifié.</div>

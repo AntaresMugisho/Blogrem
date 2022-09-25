@@ -47,10 +47,14 @@ class Router {
 
         if ($view !== null){
             ob_start();
+
             require $this->view_path . $view . ".php";
             $main_content = ob_get_clean();
+            
+            $is_admin = strpos($view, "admin") !== false;
+            $layout = $is_admin ? "admin/layout/default" : "layout/default";
 
-            require $this->view_path . "layouts/default.php";
+            require $this->view_path . $layout . ".php";
         }
 
         return $this;

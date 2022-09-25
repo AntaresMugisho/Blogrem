@@ -58,7 +58,7 @@ final class PostTable extends Table{
 
     public function find_paginated_articles()
     {
-        $query = "SELECT * FROM {$this->table} ORDER BY id ASC";
+        $query = "SELECT * FROM {$this->table} ORDER BY created_at DESC";
         $query_count = "SELECT COUNT(id) FROM {$this->table}";
 
         $paginated_query = new PaginatedQuery($query, $query_count, Post::class);

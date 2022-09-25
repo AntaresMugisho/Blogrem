@@ -18,10 +18,11 @@ $router
     ->get("/blog/[*:slug]-[i:id]", "article", "article")
     ->get("/blog", "blog", "blog")
 
-    ->match("/admin/post/edit/[i:id]", "admin/posts/edit", "edition")
-    ->match("/admin/post/new", "admin/posts/new", "new_article")
-    ->post("/admin/post/delete/[i:id]", "admin/posts/delete", "deletion")
-    ->get("/admin", "admin/posts/index", "admin")
+    ->get("/admin/manage-posts", "admin/posts/index", "posts")
+    ->match("/admin/post/edit/[i:id]", "admin/posts/edit", "edit-post")
+    ->post("/admin/post/delete/[i:id]", "admin/posts/delete", "delete-post")
+    ->match("/admin/post/create", "admin/posts/create", "create-post")
+    ->get("/admin", "admin/dashboard", "admin")
     ->run();    
     
 ?>

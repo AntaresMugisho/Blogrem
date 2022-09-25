@@ -32,7 +32,7 @@ if (!empty($_POST)){
    
     if($v->validate()) {
         $table->create($post);
-        header("Location: " . $router->url("edition", ["id"=>$post->get_id()]) . "?created=1");
+        header("Location: " . $router->url("posts") . "?created=1");
     }else {
         // Errors
         $errors = $v->errors();
