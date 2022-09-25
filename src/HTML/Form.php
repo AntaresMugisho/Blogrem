@@ -15,12 +15,13 @@ class Form{
 
     public function input(string $key, string $label)
     {
+        $type = $key === "password" ? "password" : "text";
         $value = $this->get_value($key);
 
         $html = <<<HTML
             <div class="form-group">
                 <label for={$key}>$label</label>
-                <input type="text" name={$key} id={$key} class="form-control my-2 {$this->get_invalid_class($key)}" value={$value}>
+                <input type="{$type}" name={$key} id={$key} class="form-control my-2 {$this->get_invalid_class($key)}" value={$value}>
                 {$this->get_invalid_feedback($key)}
             </div>
         HTML;
@@ -73,7 +74,13 @@ class Form{
     {
         $invalid_feedback = "";
         if (isset($this->errors[$key])){
-            $invalid_feedback .= "<small class='invalid-feedback'>" . implode('<br>', $this->errors[$key]) . "</small><br>";
+            if (is_array($this->errors[$key])){
+                $error = implode("<br>", $this->errors[$key]);
+            }
+            else{
+                $error = $this->errors[$key];
+            }
+            $invalid_feedback .= "<small class='invalid-feedback'>" . $error . "</small><br>";
         }
         return $invalid_feedback;
     }   
