@@ -1,10 +1,10 @@
 <?php
 
 // Metadata
-$title = "Admin - Gestion d'articles";
+$title = "Paneau d'administration";
 // ----------------------------------------- //
 
-use App\Table\PostTable;    
+use App\Table\PostTable;
 
 [$posts, $paginated_query] = (new PostTable())->find_paginated_articles();
 
