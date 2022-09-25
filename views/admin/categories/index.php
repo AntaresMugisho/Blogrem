@@ -1,7 +1,7 @@
 <?php
 
 // Metadata
-$title = "Admin - Gestion des catégories";
+$title = "Admin - Gestion de catégories";
 // ----------------------------------------- //
 
 use App\Table\CategoryTable;
@@ -15,7 +15,7 @@ $categories = (new CategoryTable())->all();
     | Generating HTML code                                       |
     +------------------------------------------------------------+ -->
 
-        <h1>Gestion de catégores</h1>
+        <h1>Gestion de catégories</h1>
         <hr class="border border-dark border-1">
 
         <?php if (isset($_GET["deleted"])) : ?>

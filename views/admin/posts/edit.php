@@ -22,7 +22,7 @@ if (!empty($_POST)){
     $v = new PostValidator($_POST, $table, $post->get_id());
     
     $fields = ["name", "slug", "content", "created_at"];
-    ObjectHelper::hydrate($category, $_POST, $fields);
+    ObjectHelper::hydrate($post, $_POST, $fields);
     
     if($v->validate()) {
 

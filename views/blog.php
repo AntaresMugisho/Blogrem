@@ -23,7 +23,7 @@ $post_table = new PostTable();
                 <div class="card h-100" >
                     <div class="card-body ">
                         <h5 class="card-title"><?= $post->get_name() ?></h5>
-                        <p class="text-muted fs-6 fst-italic"><?= $post->get_created_at()->format('d F Y') ?></p>
+                        <p class="text-muted fs-6 fst-italic"><?= $post->get_created_at() ?></p>
                         
                         <?php foreach ($post->get_categories() as $category) :
                             $link = $router->url("category", ["slug"=>$category->get_slug(), "id" => $category->get_id()]) ?>

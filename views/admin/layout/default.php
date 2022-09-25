@@ -27,10 +27,10 @@
                         <a class="nav-link" href="<?= $router->url("admin") ?>">Tableau de bord</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?= $router->url("posts") ?>">Gestion d'articles</a>
+                        <a class="nav-link" href="<?= $router->url("posts") ?>">Articles</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?= $router->url("categories") ?>">Gestion de catégories</a>
+                        <a class="nav-link" href="<?= $router->url("categories") ?>">Catégories</a>
                     </li>
                 </ul>
                 </div>

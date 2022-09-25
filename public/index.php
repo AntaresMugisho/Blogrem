@@ -32,7 +32,7 @@ $router
     ->get("/admin/manage-categories", "admin/categories/index", "categories")
     ->match("/admin/category/edit/[i:id]", "admin/categories/edit", "edit-category")
     ->post("/admin/category/delete/[i:id]", "admin/categories/delete", "delete-category")
-    ->match("/admin/category/create", "admin/posts/create", "create-category")
+    ->match("/admin/category/create", "admin/categories/create", "create-category")
     ->run();    
     
 ?>

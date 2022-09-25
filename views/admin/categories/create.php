@@ -54,6 +54,6 @@ if (!empty($_POST)){
         <?php endif ?>
 
        <?php 
-           $form = new Form($post, $errors);
+           $form = new Form($category, $errors);
            require "_form.php" 
         ?>

@@ -81,14 +81,13 @@ abstract class Table{
         return (int)$this->pdo->lastInsertId();
     }
 
-    public function update(array $data,int $id): void   
+    public function update(array $data, int $id): void   
     {
         $sql_fields = [];
         foreach ($data as $k => $value){
-            $sql_fields[] = "$k = :$k";
-            dump($sql_fields); 
+            $sql_fields[] = "$k = :$k"; 
         }
-        $query = $this->pdo->prepare("UPDATE {$this->table} SET " . implode(', ', $sql_fields) . "WHERE id = :id");
+        $query = $this->pdo->prepare("UPDATE {$this->table} SET " . implode(', ', $sql_fields) . " WHERE id = :id");
         $success = $query->execute(array_merge($data, ["id" => $id]));
             
         if ($success === false){

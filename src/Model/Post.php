@@ -75,9 +75,9 @@ class Post{
         return htmlentities($this->content);
     }
 
-    public function get_created_at(): Datetime
+    public function get_created_at(): string
     {
-        return new Datetime($this->created_at);
+        return (new Datetime($this->created_at))->format("Y-m-d H:m:s");
     }
     
     /** @return Category */
