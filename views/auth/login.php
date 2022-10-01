@@ -4,41 +4,51 @@ use App\Model\User;
 use App\HTML\Form;
 use App\Table\UserTable;
 
+// Metadata
+$title = "Connexion - Blogrem";
+$description= "";
+// ----------------------------------------- //
+
 $user =  new User();
 
 $errors = [];
 
 if (!empty($_POST)){
     $user->set_username($_POST["username"]);
+    
+    if (!empty($_POST["username"]) && !empty($_POST["password"])){
 
-    if (empty($_POST["username"]) || empty($_POST["password"])){
-        $errors["password"] = "Identifiant ou mot de passe incorrect";
-    }
-   
-    $table = new UserTable;
-    try{
-        $u = $table->find_by_username($_POST["username"]);
-        
-        if (password_verify($_POST["password"], $u->get_password()) === false){
-            $errors["password"] = "Identifiant ou mot de passe incorrect";
+        $table = new UserTable;
+
+        try{
+            $usr = $table->find_by_username($_POST["username"]);
+        }
+        catch (Exception){}
+
+        if (isset($usr)){
+            if (password_verify($_POST["password"], $usr->get_password()) === true){
+            
+                session_start();
+                $_SESSION["auth"] = password_hash($usr->get_id(), PASSWORD_BCRYPT);
+    
+                header("Location: " . $router->url("admin"));
+                http_response_code(301);
+                exit();
+            }
+            else{
+                $errors["password"] = "Identifiant ou mot de passe incorrect";
+            }
         }
         else{
-
-            session_start();
-            $_SESSION["auth"] = $u->get_id();
-            //header("Location : " . $router->url("admin"));
-            //http_response_code(301);
-            exit();
+            $errors["password"] = "Identifiant ou mot de passe incorrect";
         }
     }
-    catch (Exception $e){  
-        $errors["password"] = "Identifiant ou mot de passe incorrect" . $e;
+    else{
+        $errors["password"] = "Identifiant ou mot de passe incorrect";
     }
 }
 
-
 ?>
-
 
 <h1>Se connecter</h1>
 <hr class="border border-dark border-1">

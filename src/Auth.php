@@ -13,7 +13,7 @@ class Auth{
         }
     
         if (!isset($_SESSION["auth"])){
-                throw new ForbiddenException();
+            throw new ForbiddenException("Authentification requise !");
         }
     }
 }

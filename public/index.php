@@ -25,7 +25,7 @@ $router
     ->match("/admin/post/edit/[i:id]", "admin/posts/edit", "edit-post")
     ->post("/admin/post/delete/[i:id]", "admin/posts/delete", "delete-post")
     ->match("/admin/post/create", "admin/posts/create", "create-post")
-    ->post("/admin", "admin/dashboard", "admin")
+    ->get("/admin", "admin/dashboard", "admin")
 
     // Categories - Admin
     ->get("/admin/manage-categories", "admin/categories/index", "categories")
