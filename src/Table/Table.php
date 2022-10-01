@@ -64,6 +64,8 @@ abstract class Table{
         return $this->pdo->query($sql, PDO::FETCH_CLASS, $this->class)->fetchAll();
     }
 
+    // CRUD 
+
     public function create(array $data): int  
     {   
         $sql_fields = [];
@@ -85,9 +87,11 @@ abstract class Table{
     {
         $sql_fields = [];
         foreach ($data as $k => $value){
-            $sql_fields[] = "$k = :$k"; 
+            $sql_fields[] = "$k = :$k";
+            
         }
         $query = $this->pdo->prepare("UPDATE {$this->table} SET " . implode(', ', $sql_fields) . " WHERE id = :id");
+
         $success = $query->execute(array_merge($data, ["id" => $id]));
             
         if ($success === false){

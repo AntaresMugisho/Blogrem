@@ -14,7 +14,7 @@ $post_table = new PostTable();
     | Generating HTML code                                       |
     +------------------------------------------------------------+ -->
 
-        <h1 class="mb-4">Mon blog </h1>
+        <h1 class="mb-4">Mon Blog de lorems</h1>
         <hr class="border border-dark border-1">
 
         <div class="row">
@@ -23,7 +23,7 @@ $post_table = new PostTable();
                 <div class="card h-100" >
                     <div class="card-body ">
                         <h5 class="card-title"><?= $post->get_name() ?></h5>
-                        <p class="text-muted fs-6 fst-italic"><?= $post->get_created_at() ?></p>
+                        <p class="text-muted fs-6 fst-italic"><?= $post->get_created_at()->format('d M Y') ?></p>
                         
                         <?php foreach ($post->get_categories() as $category) :
                             $link = $router->url("category", ["slug"=>$category->get_slug(), "id" => $category->get_id()]) ?>
@@ -37,6 +37,7 @@ $post_table = new PostTable();
             </div>
             <?php endforeach; ?>
         </div>
+
 
 <?php
     $link = $router->url("blog");

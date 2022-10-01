@@ -31,11 +31,14 @@ if (!empty($_POST)){
         foreach ($fields as $field) {
             $getter = "get_" . $field;
             $data[$field] = $post->$getter();
+            if (is_object($data[$field])){
+                $data[$field] = $data[$field]->format('Y-m-d H:i:s');
+            }
         }
-
         $table->update($data, $post->get_id());
         $updated = true;
-    } else {
+    }
+     else {
         // Errors
         $errors = $v->errors();
     }

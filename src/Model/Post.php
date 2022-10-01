@@ -77,7 +77,7 @@ class Post{
 
     public function get_created_at(): Datetime
     {
-        return (new Datetime($this->created_at));
+        return (new DateTime($this->created_at));
     }
     
     /** @return Category */

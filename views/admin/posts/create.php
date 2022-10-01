@@ -29,11 +29,15 @@ if (!empty($_POST)){
         foreach ($fields as $field) {
             $getter = "get_" . $field;
             $data[$field] = $post->$getter();
+            if (is_object($data[$field])){
+                $data[$field] = $data[$field]->format('Y-m-d H:i:s');
+            }
         }
 
         $table->create($data);
         header("Location: " . $router->url("posts") . "?created=1");
         http_response_code(301);
+        exit();
     }
     else {
         // Errors
