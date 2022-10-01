@@ -13,15 +13,21 @@ class Post{
 
     private $categories = [];
 
+    public function set_id(int $id) : int
+    {
+        $this->id = $id;
+        return $this->id;
+    }
+
     public function set_name(string $name):self
     {
-        $this->name = htmlentities($name);
+        $this->name = $name;
         return $this;
     }
 
     public function set_slug(string $slug): self
     {
-        $this->slug = htmlentities($slug);
+        $this->slug = $slug;
         return $this;
     }
 
@@ -41,20 +47,14 @@ class Post{
         return ($this->id);
     }
 
-    public function set_id(int $id) : int
-    {
-        $this->id = $id;
-        return $this->id;
-    }
-
     public function get_name() : ?string
     {
-        return nl2br(htmlentities($this->name));
+        return $this->name;
     }
 
     public function get_slug() : ?string
     {
-        return htmlentities($this->slug);
+        return $this->slug;
     }
 
     public function get_excerpt(): ?string
@@ -63,7 +63,7 @@ class Post{
             return null;
         }
 
-        return nl2br(htmlentities(Text::excerpt($this->content, 60)));
+        return Text::excerpt($this->content, 65);
     }
 
     public function get_content(): ?string
@@ -72,12 +72,12 @@ class Post{
             return null;
         }
 
-        return htmlentities($this->content);
+        return nl2br($this->content);
     }
 
-    public function get_created_at(): string
+    public function get_created_at(): Datetime
     {
-        return (new Datetime($this->created_at))->format("Y-m-d H:m:s");
+        return (new Datetime($this->created_at));
     }
     
     /** @return Category */
