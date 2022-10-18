@@ -2,6 +2,8 @@
 
 namespace App;
 
+use \Exception;
+
 class Router {
 
     private $router;
@@ -40,8 +42,9 @@ class Router {
     public function run():self
     {
         $match = $this->router->match();
-        $view = $match["target"] ?: "e404";
-
+     
+        $view = $match["target"] ? : "e404";
+ 
         $params = $match["params"];
         $router = $this;
 

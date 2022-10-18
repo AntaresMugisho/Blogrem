@@ -34,6 +34,4 @@ $router
     ->match("/admin/category/create", "admin/categories/create", "create-category")
    
     // Run router
-    ->run();    
-    
-?>
+    ->run();
