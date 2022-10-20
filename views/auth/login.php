@@ -14,18 +14,24 @@ $user =  new User();
 $errors = [];
 
 if (!empty($_POST)){
+    
     $user->set_username($_POST["username"]);
     
     if (!empty($_POST["username"]) && !empty($_POST["password"])){
 
-        $table = new UserTable;
+        $table = new UserTable();
 
-        try{
-            $usr = $table->find_by_username($_POST["username"]);
-        }
-        catch (Exception){}
+        // try{
+        //     $usr = $table->find_by_username($_POST["username"]);
+        // }
+        // catch (Exception){
+        //     // User not found
+        //     $errors["password"] = "Identifiant ou mot de passe incorrect";
+        // }
 
-        if (isset($usr)){
+        $usr = $table->find_by_username($_POST["username"]);
+
+        if ($usr !== null){
             if (password_verify($_POST["password"], $usr->get_password()) === true){
             
                 session_start();
@@ -36,14 +42,17 @@ if (!empty($_POST)){
                 exit();
             }
             else{
+                // Wrong password entered
                 $errors["password"] = "Identifiant ou mot de passe incorrect";
             }
         }
         else{
+            // User not found
             $errors["password"] = "Identifiant ou mot de passe incorrect";
         }
     }
     else{
+        // No data entered
         $errors["password"] = "Identifiant ou mot de passe incorrect";
     }
 }

@@ -20,7 +20,8 @@ final class UserTable extends Table{
         
         $result = $query->fetch();
         if ($result === false){
-            throw new Exception("Aucun enregistrement ne correspond à ce nom");
+            return null;
+            // throw new Exception("Aucun enregistrement ne correspond à ce nom");
         }
 
         return $result;
