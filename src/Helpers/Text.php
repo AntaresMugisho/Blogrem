@@ -5,10 +5,10 @@ namespace App\Helpers;
 class Text {
 
 
-    public static function excerpt(string $content, int $limit = 60):string
+    public static function excerpt(string $content, int $limit = 65):string
     {
 
-        if (mb_strlen($content <= $limit)){
+        if (mb_strlen($content) <= $limit){
             return $content;
         }
 

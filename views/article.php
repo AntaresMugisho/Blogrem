@@ -37,4 +37,4 @@ if ($slug !== $post->get_slug()){
         <?php endforeach ?>
 
         <hr class="border border-dark border-1">
-        <p class="mt-4"><?= $post->get_content() ?></p>
+        <p class="mt-4"><?= $post->get_excerpt() ?></p>
