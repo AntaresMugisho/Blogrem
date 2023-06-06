@@ -63,5 +63,4 @@ class Router {
         return $this;
     }
 }
-?>
 
